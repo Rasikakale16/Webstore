@@ -1,1 +1,2 @@
-# chrome-extension
+# chrome-extension - Webs store
+- saves websites you want.

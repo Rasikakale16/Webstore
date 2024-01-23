@@ -1,2 +1,3 @@
 # chrome-extension - Webs store
-- saves websites you want.
+- saves websites and current tab of your window.
+

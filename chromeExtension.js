@@ -30,7 +30,7 @@ const ulEl = document.getElementById("ul-el")
 
 const deletebtn = document.getElementById("delete-btn")
 const leadsfromlocalstorage =JSON.parse(localStorage.getItem("myleads"))
-
+const tabBtn = document.getElementById("tab-btn")
 
 if(leadsfromlocalstorage){  //checking of leadsfromlocalstorage is truthy
     myleads = leadsfromlocalstorage
@@ -38,22 +38,16 @@ if(leadsfromlocalstorage){  //checking of leadsfromlocalstorage is truthy
 }
 
 
-deletebtn.addEventListener("dblclick",function(){
-    //console.log("double clicked!")
-    localStorage.clear()
-    myleads =[]
-    renderleads()
+//for saving tab 
+tabBtn.addEventListener("click",function(){
+    chrome.tabs.query({active:true, currentWindow:true},function(tabs){
+        myleads.push(tabs[0].url)
+        localStorage.setItem("myleads",JSON.stringify(myleads))
+        renderleads(myleads)
+    })
 })
 
-inputBtn.addEventListener("click",function(){
-    //console.log("Button clicked ");
-    //myleads.push("www.xyz.com")
-    myleads.push(inputEl.value)
-    //console.log(myleads)
-    inputEl.value = ""
-    localStorage.setItem("myleads",JSON.stringify(myleads))
-    renderleads()
-})
+
 
 //logging out the items in myLeads array using a for loop
 // for(let i = 0; i<myleads.length; i++){
@@ -99,6 +93,22 @@ function renderleads() {
 
 
 
+deletebtn.addEventListener("dblclick",function(){
+    //console.log("double clicked!")
+    localStorage.clear()
+    myleads =[]
+    renderleads()
+})
+
+inputBtn.addEventListener("click",function(){
+    //console.log("Button clicked ");
+    //myleads.push("www.xyz.com")
+    myleads.push(inputEl.value)
+    //console.log(myleads)
+    inputEl.value = ""
+    localStorage.setItem("myleads",JSON.stringify(myleads))
+    renderleads()
+})
 
 
 

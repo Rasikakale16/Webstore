@@ -30,6 +30,7 @@ const ulEl = document.getElementById("ul-el")
 
 const deletebtn = document.getElementById("delete-btn")
 const leadsfromlocalstorage =JSON.parse(localStorage.getItem("myleads"))
+const tabBtn = document.getElementById("tab-btn")
 
 
 if(leadsfromlocalstorage){  //checking of leadsfromlocalstorage is truthy
@@ -38,22 +39,18 @@ if(leadsfromlocalstorage){  //checking of leadsfromlocalstorage is truthy
 }
 
 
-deletebtn.addEventListener("dblclick",function(){
-    //console.log("double clicked!")
-    localStorage.clear()
-    myleads =[]
-    renderleads()
+
+//for saving tab 
+tabBtn.addEventListener("click",function(){
+    chrome.tabs.query({active:true, currentWindow:true},function(tabs){
+        myleads.push(tabs[0].url)
+        localStorage.setItem("myleads",JSON.stringify(myleads))
+        renderleads(myleads)
+        
+    })
 })
 
-inputBtn.addEventListener("click",function(){
-    //console.log("Button clicked ");
-    //myleads.push("www.xyz.com")
-    myleads.push(inputEl.value)
-    //console.log(myleads)
-    inputEl.value = ""
-    localStorage.setItem("myleads",JSON.stringify(myleads))
-    renderleads()
-})
+
 
 //logging out the items in myLeads array using a for loop
 // for(let i = 0; i<myleads.length; i++){
@@ -99,8 +96,36 @@ function renderleads() {
 
 
 
+deletebtn.addEventListener("dblclick",function(){
+    //console.log("double clicked!")
+    localStorage.clear()
+    myleads =[]
+    renderleads()
+})
+
+inputBtn.addEventListener("click",function(){
+    //console.log("Button clicked ");
+    //myleads.push("www.xyz.com")
+    myleads.push(inputEl.value)
+    //console.log(myleads)
+    inputEl.value = ""
+    localStorage.setItem("myleads",JSON.stringify(myleads))
+    renderleads()
+})
 
 
+$$('.input-btn').forEach(el => 
+    el.addEventListener('mousemove', function(e) {
+        const pos = this.getBoundingClientRect();
+        const mx = e.clientX - pos.left - pos.width/2; 
+        const my = e.clientY - pos.top - pos.height/2;
+         
+        this.style.transform = 'translate('+ mx * 0.15 +'px, '+ my * 0.3 +'px)';
+        this.style.transform += 'rotate3d('+ mx * -0.1 +', '+ my * -0.3 +', 0, 12deg)';
+        this.children[0].style.transform = 'translate('+ mx * 0.025 +'px, '+ my * 0.075 +'px)';
+      }));
+      
+      
 
 
 

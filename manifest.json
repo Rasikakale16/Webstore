@@ -1,9 +1,12 @@
 {
     "manifest_version": 3,
     "version": "1.1",
-    "name": "Webs store",
+    "name": "webstore",
     "action": {
         "default_popup": "chromeExtension.html",
         "default_icon": "shopping-basket.png"
-    }
+    },
+    "permissions":[
+        "tabs"
+    ]
 }
